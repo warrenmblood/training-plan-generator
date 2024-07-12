@@ -8,7 +8,7 @@ function Workout({ title, desc, terms }) {
             <div className="definitions">
                 {Object.keys(terms).map(key => (
                     <div className="definition">
-                        <span>{terms[key].term}: </span>{terms[key].definition}
+                        <span>{terms[key].term}: </span>{terms[key].def}
                     </div>
                 ))}
             </div>

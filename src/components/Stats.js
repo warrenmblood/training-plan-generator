@@ -3,8 +3,8 @@ import React from "react";
 function Stats() {
     return (
         <div className="stats">
-            <div>Week 3/8</div>
-            <div>Total Distance Planned This Week: 38 mi</div>
+            <p>Week 3/8</p>
+            <p>Total Distance Planned This Week: 38 mi</p>
         </div>
     );
 }
