@@ -18,8 +18,8 @@ body {
 .entry {
     flex: 1 1 21%;
     display: flex;
+    flex-flow: row wrap;
     gap: 10px;
-    max-width: 31%;
 }
 
 .entry.submit {
@@ -67,35 +67,40 @@ input#name {
     text-align: center;
 }
 
-.workout {
-    border: 2px solid lightgray;
-    border-radius: 25px;
-    width: 550px;
-    height: 250px;
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 10px;
-    padding: 2%;
-}
-
 .workoutHeader > p {
     margin: 5px;
 }
 
-.workout > .title {
+.workout {
+    border: 1px solid black;
+    border-radius: 25px;
+    width: 550px;
+    height: 300px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+    padding: 10px;
+}
+
+.workout > .title, .workout > .date {
     text-align: center;
+}
+
+.workout > .date {
+    color: #71797E;
+}
+
+.workout > .title {
+    font-size: 22px;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .workout > div {
-    padding: 2%;
+    padding: 10px;
 }
 
-.workout > .description {
-    font-size: 15px;
-}
-
-.definitions {
+.workout > .description, .definitions {
     font-size: 15px;
 }
 
@@ -104,10 +109,11 @@ input#name {
 }
 
 .stats {
-    margin: auto;
-    margin: 40px;
+    width: 100%;
     text-align: center;
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 20px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
 }
