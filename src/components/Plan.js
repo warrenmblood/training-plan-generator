@@ -6,14 +6,15 @@ import { compareDates, planWeeks, currentWeek } from "../utils.js";
 function Plan({ planInfo }) {
     const [planDate, setPlanDate] = useState(new Date()); // date selected
     const [workoutNum, setWorkoutNum] = useState(0); // index of workout in planInfo.workouts that is displayed
-    const [started, setStarted] = useState(false); // whether planDate is before planInfo.startDate
-    const [completed, setCompleted] = useState(false); // whether planDate is after planInfo.goalDate
-    const [onPlan, setOnPlan] = useState(false); // whether planDate falls within planInfo.startDate and planInfo.goalDate
-    const [offPlanMsg, setOffPlanMsg] = useState(''); // message displayed in workout when planDate falls outside of planInfo.startDate and planInfo.goalDate
+    const [onPlan, setOnPlan] = useState(true); // whether planDate falls within planInfo.startDate and planInfo.goalDate
+    const [offPlanMsg, setOffPlanMsg] = useState(""); // workout message displayed when planDate falls outside of planInfo.startDate and planInfo.goalDate
 
     const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
 
     useEffect(() => {
+        if(!planInfo.startDate) {
+            return;
+        }
         const start = planInfo.startDate; // first day of plan
         const end = planInfo.goalDate; // last day of plan
         const today = new Date(); // today's date
@@ -24,26 +25,22 @@ function Plan({ planInfo }) {
             // plan has ended. set planDate to last day of plan
             setPlanDate(end);
         }
-    }, []);
+    }, [planInfo]);
     
     useEffect(() => {
+        if(!planInfo.startDate) {
+            return;
+        }
         const diff = compareDates(planInfo.startDate, planDate); // days from first day of plan until planDate
         setWorkoutNum(Math.max(0, Math.min(diff, planInfo.workouts.length - 1))); // workout # in plan
-        setStarted(diff >= 0);
-        setCompleted(diff >= planInfo.workouts.length);
-        console.log(planInfo);
-    }, [planDate]);
-
-    useEffect(() => {
-        setOnPlan(started && !completed);
+        const completed = (diff >=  planInfo.workouts.length);
+        setOnPlan(diff >= 0 && !completed);
         setOffPlanMsg(
             completed ? 
             `Plan completed ${planInfo.goalDate.toLocaleDateString("en-US")}` : 
             `Plan starts ${planInfo.startDate.toLocaleDateString("en-US")}`
         );
-        console.log(`started: ${started}`);
-        console.log(`completed: ${completed}`);
-    }, [started, completed]);
+    }, [planDate]);
 
     const nextDay = () => {
         setPlanDate(new Date(planDate.getFullYear(), planDate.getMonth(), planDate.getDate() + 1));
@@ -53,27 +50,26 @@ function Plan({ planInfo }) {
         setPlanDate(new Date(planDate.getFullYear(), planDate.getMonth(), planDate.getDate() - 1));
     };
 
+    const workoutExists = onPlan && planInfo.workouts;
+
     return(
         <div className="plan">
             <div className="workoutHeader">
-                <p>{ planInfo.name ?? "" }</p>
-                <p>{ `Goal Date:
-                        ${planInfo.goalDate.toLocaleDateString("en-US", dateFormat) ?? new Date().toLocaleDateString("en-US", dateFormat)}
-                    `}
-                </p>
+                <p>{planInfo.name ?? "Select a Plan to View Workouts"}</p>
+                <p>{planInfo.goalDate ? `Goal Date: ${planInfo.goalDate.toLocaleDateString("en-US", dateFormat)}` : ""}</p>
             </div>
             <button type="button" onClick={prevDay}>&#128896;</button>
             <Workout
                 planDate = {planDate}
-                title = {onPlan ? planInfo.workouts[workoutNum].title : offPlanMsg}
-                desc = {onPlan ? planInfo.workouts[workoutNum].description : ""}
-                terms = {onPlan ? planInfo.workouts[workoutNum].terms : []}
+                title = {workoutExists ? planInfo.workouts[workoutNum].title : offPlanMsg}
+                desc = {workoutExists ? planInfo.workouts[workoutNum].description : ""}
+                terms = {workoutExists ? planInfo.workouts[workoutNum].terms : []}
             />
             <button type="button" onClick={nextDay}>&#128898;</button>
             <Stats
                 onPlan = {onPlan}
-                currentWeek = {currentWeek(planInfo.startDate, workoutNum)}
-                planWeeks = {planWeeks(planInfo.startDate, planInfo.workouts.length)}
+                currentWeek = {planInfo.startDate ? currentWeek(planInfo.startDate, workoutNum) : 0}
+                planWeeks = {planInfo.startDate ? planWeeks(planInfo.startDate, planInfo.workouts.length) : 0}
             />
         </div>
     );

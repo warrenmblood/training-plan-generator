@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { generatePlan, compareDates } from "../utils.js";
 
-function PlanInputs({ setPlan }) {
-    const [daysPerWeek, setDaysPerWeek] = useState(4);
+function PlanInputs({ setPlan, offDay, jargon }) {
+    const [runsPerWeek, setRunsPerWeek] = useState(4);
 
     const updateSlider = (e) => {
-        setDaysPerWeek(e.target.value);
+        setRunsPerWeek(e.target.value);
     };
 
     const { 
@@ -17,10 +17,10 @@ function PlanInputs({ setPlan }) {
     } = useForm();
 
     const onSubmit = (data) => {
-        const plan = generatePlan(data);
+        const plan = generatePlan(data, offDay, jargon);
+        console.log(data);
         console.log(plan);
         setPlan(plan);
-        console.log(data);
     };
 
     return (
@@ -41,18 +41,18 @@ function PlanInputs({ setPlan }) {
                     )}
                 </div>
                 <div className="entry">
-                    <label htmlFor="currentDistance">Current Furthest Distance</label>
+                    <label htmlFor="startDistance">Current Furthest Distance</label>
                     <input
-                        {...register("currentDistance", {
-                            required: "Current distance is required",
+                        {...register("startDistance", {
+                            required: "Current furthest distance is required",
                             valueAsNumber: true,
                         })}
-                        id="currentDistance"
+                        id="startDistance"
                         type="number"
                         step="any"
                     />
-                    {errors.currentDistance && (
-                        <div className="error">errors.currentDistance.message</div>
+                    {errors.startDistance && (
+                        <div className="error">errors.startDistance.message</div>
                     )}
                 </div>
                 <div className="entry">
@@ -71,19 +71,19 @@ function PlanInputs({ setPlan }) {
                     )}
                 </div>
                 <div className="entry">
-                    <label htmlFor="daysPerWeek">Runs per Week</label>
+                    <label htmlFor="runsPerWeek">Runs per Week</label>
                     <input 
-                        {...register("daysPerWeek", {
+                        {...register("runsPerWeek", {
                             valueAsNumber: true,
                         })}
                         type="range"
-                        id="daysPerWeek"
-                        value={daysPerWeek}
+                        id="runsPerWeek"
+                        value={runsPerWeek}
                         min="1"
                         max="7"
                         onChange={(e) => updateSlider(e)}
                     />
-                    <output>{daysPerWeek}</output>
+                    <output>{runsPerWeek}</output>
                 </div>
                 <div className="entry">
                     <label htmlFor="startDate">Start Date</label>
