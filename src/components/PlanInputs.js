@@ -5,9 +5,7 @@ import { generatePlan, compareDates } from "../utils.js";
 function PlanInputs({ setPlan, offDay, jargon }) {
     const [runsPerWeek, setRunsPerWeek] = useState(4);
 
-    const updateSlider = (e) => {
-        setRunsPerWeek(e.target.value);
-    };
+    const updateSlider = (e) => setRunsPerWeek(e.target.value);
 
     const { 
         register,
@@ -18,8 +16,6 @@ function PlanInputs({ setPlan, offDay, jargon }) {
 
     const onSubmit = (data) => {
         const plan = generatePlan(data, offDay, jargon);
-        console.log(data);
-        console.log(plan);
         setPlan(plan);
     };
 

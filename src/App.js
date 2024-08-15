@@ -7,50 +7,32 @@ import './App.css';
 const App = () => {
   const [plan, setPlan] = useState({});
 
+  // --- pull data below from server ---
   const jargon = {};
+
   jargon.easy = {
     term: 'easy pace',
     def: `a relaxed, "conversational" pace. Under 75% Max HR`
   };
+
   jargon.tempo = {
     term: 'tempo pace',
     def: `a harder effort, but maintainable for 40-60 minutes. 85-90% Max HR`
   };
-  const workout1 = {
-    title: "5 Mile Run",
-    description: "Run 5 miles at easy pace",
-    terms: [jargon.easy]
-  };
+  
   const offDay = {
     title: "Off Day",
     description: "Take a day to rest.",
     terms: []
   };
-  const workout3 = {
-    title: "10 Mile Progression Run",
-    description: 
-      "Start at easy pace for first 2 miles. " +
-      "Then, slowly increase your pace each mile until you reach tempo pace with 2 miles left. " +
-      "Hold tempo pace for last 2 miles. Adjust pace based on feel.",
-    terms: [jargon.easy, jargon.tempo]
-  };
-  const samplePlan = {
-    name: "Sample Plan",
-    startDate: new Date(),
-    goalDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2), 
-    workouts: [workout1, offDay, workout3]
-  };
-
-  useEffect(() => {
-    setPlan(samplePlan);
-  }, []);
+  // --------------------------------------
 
   return (
     <div className="wrapper">
-      <PlanInputs 
+      <PlanInputs
         setPlan={setPlan}
-        offDay={offDay}
-        jargon={jargon}
+        offDay={offDay ?? {}}
+        jargon={jargon ?? {}}
       />
       <Plan 
         planInfo={plan ?? {}}

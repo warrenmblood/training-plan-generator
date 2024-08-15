@@ -89,65 +89,62 @@ export function generatePlan(planInputs, offDay, jargon) {
     
     plan.workouts.push(generateWorkout('goal', goalDistance, unit, jargon));
     longest = Math.round(0.75*goalDistance);
+    // work backwards adding workouts in weekly order until first day of plan. replace with "off" workout by lowest priority
+    // 1: easy run - short 30% (priority = 7)
+    // 2: easy run - medium 40% (priority = 3)
+    // 3: progression run 50% (priority = 5)
+    // 4: easy run - short (priority = 2)
+    // 5: easy run - medium (priority = 6)
+    // 6: easy run - short (priority = 4)
+    // 7: long run (priority = 1)
     for (let i = 1; i <= planLength - 1; i++) {
         switch (i % 7) {
             case 0: // long run (priority = 1)
                 plan.workouts.unshift(generateWorkout('long', longest, unit, jargon));
                 longest -= weeklyInc;
                 break;
-            case 1: // short easy run (priority = 7)
-                if(runsPerWeek >= 7) {
+            case 1: // short easy run (priority = 4)
+                if(runsPerWeek >= 4) {
                     plan.workouts.unshift(generateWorkout('easy', Math.round(0.3*longest), unit, jargon));
                 } else {
                     plan.workouts.unshift(offDay);
                 }
                 break;
-            case 2: // medium easy run (priority = 3)
-                if(runsPerWeek >= 3) {
-                    plan.workouts.unshift(generateWorkout('easy', Math.round(0.4*longest), unit, jargon));
-                } else {
-                    plan.workouts.unshift(offDay);
-                }
-                break;
-            case 3: // progression run (priority = 5)
-                if(runsPerWeek >= 5) {
-                    plan.workouts.unshift(generateWorkout('progression', Math.round(0.5*longest), unit, jargon));
-                } else {
-                    plan.workouts.unshift(offDay);
-                }
-                break;
-            case 4: // short easy run (priority = 2)
-                if(runsPerWeek >= 2) {
-                    plan.workouts.unshift(generateWorkout('easy', Math.round(0.3*longest), unit, jargon));
-                } else {
-                    plan.workouts.unshift(offDay);
-                }
-                break;
-            case 5: // medium easy run (priority = 6)
+            case 2: // medium easy run (priority = 6)
                 if(runsPerWeek >= 6) {
                     plan.workouts.unshift(generateWorkout('easy', Math.round(0.4*longest), unit, jargon));
                 } else {
                     plan.workouts.unshift(offDay);
                 }
                 break;
-            case 6: // short easy run (priority = 4)
-                if(runsPerWeek >= 4) {
+            case 3: // short easy run (priority = 2)
+                if(runsPerWeek >= 2) {
+                    plan.workouts.unshift(generateWorkout('easy', Math.round(0.3*longest), unit, jargon));
+                } else {
+                    plan.workouts.unshift(offDay);
+                }
+                break;
+            case 4: // progression run (priority = 5)
+                if(runsPerWeek >= 5) {
+                    plan.workouts.unshift(generateWorkout('progression', Math.round(0.5*longest), unit, jargon));
+                } else {
+                    plan.workouts.unshift(offDay);
+                }
+                break;
+            case 5: // medium easy run (priority = 3)
+                if(runsPerWeek >= 3) {
+                    plan.workouts.unshift(generateWorkout('easy', Math.round(0.4*longest), unit, jargon));
+                } else {
+                    plan.workouts.unshift(offDay);
+                }
+                break;
+            case 6: // short easy run (priority = 7)
+                if(runsPerWeek >= 7) {
                     plan.workouts.unshift(generateWorkout('easy', Math.round(0.3*longest), unit, jargon));
                 } else {
                     plan.workouts.unshift(offDay);
                 }
         }
     }
-
     return plan;
 }
-
-// algorithm - assume plan is at least 8 weeks
-// workouts in order. replace with off by (lowest priority)
-// 1 - easy run - short 30% (7)
-// 2 - easy run - medium 40% (3)
-// 3 - progression run 50% (5)
-// 4 - easy run - short (2)
-// 5 - easy run - medium (6)
-// 6 - easy run - short (4)
-// 7 - long run (1)
