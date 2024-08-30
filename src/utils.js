@@ -18,8 +18,8 @@ export function planWeeks(start, length) {
     // return # weeks in plan
     // start: start date of plan. date object
     // length: number of days in plan. non-negative integer
-    const fullWeeks = Math.floor(length / 7);
-    const daysLeft = length % 7;
+    const fullWeeks = Math.floor((length - 1) / 7);
+    const daysLeft = (length - 1) % 7;
     const weeks = (daysLeft > 6 - start.getDay()) ? fullWeeks + 2 : fullWeeks + 1;
     return weeks;
 }

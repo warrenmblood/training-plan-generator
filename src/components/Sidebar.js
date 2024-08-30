@@ -7,17 +7,17 @@ function Sidebar({ savedPlans }) {
     
     return(
         <div className={`sidebar${active ? " active" : ""}`}>
-            <div className="header" onClick={activateSidebar}>
-                <span></span>
-                <span>&#9776;</span>
+            <div className="header">
+                <span className="title">Saved Plans</span>
+                <button onClick={activateSidebar}>&#9776;</button>
             </div>
-            <div className="plan-list">
+            <ol className="plan-list">
                 {savedPlans.map(plan => (
-                    <div className="saved-plan">
+                    <li className="saved-plan">
                         {plan.name}
-                    </div>
+                    </li>
                 ))}
-            </div>
+            </ol>
         </div>
     );
 

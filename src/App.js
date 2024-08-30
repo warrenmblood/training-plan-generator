@@ -6,7 +6,7 @@ import './App.css';
 
 const App = () => {
   const [plan, setPlan] = useState({});
-  const [savedPlans, setSavedPlans] = useState([]);
+  const [savedPlans, setSavedPlans] = useState([{name:"Chicago Marathon 2018"},{name:"New York City Marathon 2024"}]);
 
   // --- pull data below from server ---
   const jargon = {};

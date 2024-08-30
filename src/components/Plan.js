@@ -6,7 +6,7 @@ import { compareDates, planWeeks, currentWeek } from "../utils.js";
 function Plan({ planInfo }) {
     const [planDate, setPlanDate] = useState(new Date()); // date selected
     const [workoutNum, setWorkoutNum] = useState(0); // index of workout in planInfo.workouts that is displayed
-    const [onPlan, setOnPlan] = useState(true); // whether planDate falls within planInfo.startDate and planInfo.goalDate
+    const [onPlan, setOnPlan] = useState(false); // whether planDate falls within planInfo.startDate and planInfo.goalDate
     const [offPlanMsg, setOffPlanMsg] = useState(""); // workout message displayed when planDate falls outside of planInfo.startDate and planInfo.goalDate
 
     const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -15,6 +15,7 @@ function Plan({ planInfo }) {
         if(!planInfo.startDate) {
             return;
         }
+        setOnPlan(true);
         const start = planInfo.startDate; // first day of plan
         const end = planInfo.goalDate; // last day of plan
         const today = new Date(); // today's date
