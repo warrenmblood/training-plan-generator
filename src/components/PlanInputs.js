@@ -21,7 +21,7 @@ function PlanInputs({ setPlan, offDay, jargon }) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <fieldset className="planInputs">
+            <fieldset className="plan-inputs">
                 <div className="entry">
                     <label htmlFor="unit">Distance Unit</label>
                     <select
@@ -37,7 +37,7 @@ function PlanInputs({ setPlan, offDay, jargon }) {
                     )}
                 </div>
                 <div className="entry">
-                    <label htmlFor="startDistance">Current Furthest Distance</label>
+                    <label htmlFor="startDistance">Current Distance</label>
                     <input
                         {...register("startDistance", {
                             required: "Current furthest distance is required",

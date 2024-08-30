@@ -6,6 +6,7 @@ import './App.css';
 
 const App = () => {
   const [plan, setPlan] = useState({});
+  const [savedPlans, setSavedPlans] = useState([]);
 
   // --- pull data below from server ---
   const jargon = {};
@@ -29,15 +30,19 @@ const App = () => {
 
   return (
     <div className="wrapper">
-      <PlanInputs
-        setPlan={setPlan}
-        offDay={offDay ?? {}}
-        jargon={jargon ?? {}}
+      <Sidebar
+        savedPlans={savedPlans ?? []}
       />
-      <Plan 
-        planInfo={plan ?? {}}
-      />
-      <Sidebar />
+      <div className="main-content">
+        <PlanInputs
+          setPlan={setPlan}
+          offDay={offDay ?? {}}
+          jargon={jargon ?? {}}
+        />
+        <Plan 
+          planInfo={plan ?? {}}
+        />
+      </div>
     </div>
   );
 }

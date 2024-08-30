@@ -54,18 +54,20 @@ function Plan({ planInfo }) {
 
     return(
         <div className="plan">
-            <div className="workoutHeader">
+            <div className="workout-header">
                 <p>{planInfo.name ?? "Select a Plan to View Workouts"}</p>
                 <p>{planInfo.goalDate ? `Goal Date: ${planInfo.goalDate.toLocaleDateString("en-US", dateFormat)}` : ""}</p>
             </div>
-            <button type="button" onClick={prevDay}>&#128896;</button>
-            <Workout
-                planDate = {planDate}
-                title = {workoutExists ? planInfo.workouts[workoutNum].title : offPlanMsg}
-                desc = {workoutExists ? planInfo.workouts[workoutNum].description : ""}
-                terms = {workoutExists ? planInfo.workouts[workoutNum].terms : []}
-            />
-            <button type="button" onClick={nextDay}>&#128898;</button>
+            <div className="workout-body">
+                <button type="button" onClick={prevDay}>&#128896;</button>
+                <Workout
+                    planDate = {planDate}
+                    title = {workoutExists ? planInfo.workouts[workoutNum].title : offPlanMsg}
+                    desc = {workoutExists ? planInfo.workouts[workoutNum].description : ""}
+                    terms = {workoutExists ? planInfo.workouts[workoutNum].terms : []}
+                />
+                <button type="button" onClick={nextDay}>&#128898;</button>
+            </div>
             <Stats
                 onPlan = {onPlan}
                 currentWeek = {planInfo.startDate ? currentWeek(planInfo.startDate, workoutNum) : 0}

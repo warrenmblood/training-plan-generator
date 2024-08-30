@@ -3,7 +3,45 @@ body {
     font-size: 18px;
 }
 
-.planInputs {
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 50px;
+    background-color: #12171e;
+    color: white;
+    padding: .4rem .8rem;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active {
+    width: 200px;
+}
+
+.plan-list .saved-plan {
+    border-top: 1px solid white
+}
+
+.main-content {
+    position: relative;
+    left: 50px;
+    width: calc(100% - 50px);
+    transition: all 0.5s ease;
+}
+
+.sidebar.active ~ .main-content {
+    left: 200px;
+    width: calc(100% - 200px);
+}
+
+.sidebar > .header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.plan-inputs {
     margin: auto;
     margin-left: 40px;
     margin-right: 40px;
@@ -12,7 +50,7 @@ body {
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 }
 
 .entry {
@@ -26,7 +64,7 @@ body {
     justify-content: flex-end;
 }
 
-.plan > button {
+.workout-body > button {
     width: 100px;
     height: 100px;
     border: transparent;
@@ -43,7 +81,7 @@ body {
     background-color: lightgreen;
 }
 
-input#currentDistance, input#goalDistance {
+input#startDistance, input#goalDistance {
     width: 50px;
 }
 
@@ -51,24 +89,30 @@ input#name {
     width: 60%;
 }
 
-.plan {
-    margin: auto;
-    width: 60%;
-    margin-top: 40px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+input#runsPerWeek {
+    width: 120px;
 }
 
-.workoutHeader {
+.plan {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.workout-header {
     width: 100%;
     text-align: center;
 }
 
-.workoutHeader > p {
+.workout-header > p {
     margin: 5px;
+}
+
+.workout-body {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .workout {

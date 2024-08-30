@@ -88,7 +88,7 @@ export function generatePlan(planInputs, offDay, jargon) {
     let longest;
     
     plan.workouts.push(generateWorkout('goal', goalDistance, unit, jargon));
-    longest = Math.round(0.75*goalDistance);
+    longest = Math.floor(0.75*goalDistance);
     // work backwards adding workouts in weekly order until first day of plan. replace with "off" workout by lowest priority
     // 1: easy run - short 30% (priority = 7)
     // 2: easy run - medium 40% (priority = 3)
