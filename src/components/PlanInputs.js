@@ -17,9 +17,8 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
     const onSubmit = (data, e) => {
         const plan = generatePlan(data, offDay, jargon);
         setPlan(plan);
-        const saved = [ ...savedPlans ];
-        saved.push(plan);
-        setSavedPlans(saved);
+        setSavedPlans([...savedPlans, plan]);
+        
         e.target.reset();
     };
 
@@ -30,7 +29,7 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="unit">Distance Unit</label>
                     <select
                         {...register("unit", {
-                            required: "Unit is required.",
+                            required: "Required field.",
                         })}
                         id="unit">
                         <option value="mi">mi</option>
@@ -44,11 +43,11 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="startDistance">Current Distance</label>
                     <input
                         {...register("startDistance", {
-                            required: "Current distance is required.",
+                            required: "Required field.",
                             valueAsNumber: true,
                             min: {
-                                value: 0,
-                                message: "Enter a valid distance."
+                                value: 1,
+                                message: "Enter distance of at least 1."
                             },
                             max: {
                                 value: 100,
@@ -67,7 +66,7 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="goalDistance">Goal Distance</label>
                     <input 
                         {...register("goalDistance", {
-                            required: "Goal distance is required.",
+                            required: "Required field.",
                             valueAsNumber: true,
                             min: {
                                 value: 0,
@@ -111,7 +110,7 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="startDate">Start Date</label>
                     <input
                         {...register("startDate", {
-                            required: "Start date is required.",
+                            required: "Required field.",
                             valueAsDate: true,
                             validate: (value) => {
                                 if(compareDates(new Date(), value) < -1) {
@@ -131,10 +130,10 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="goalDate">Goal Date</label>
                     <input
                         {...register("goalDate", {
-                            required: "Goal date is required.",
+                            required: "Required field.",
                             valueAsDate: true,
                             validate: (value) => {
-                                if(compareDates(getValues("startDate"), value) < 56) {
+                                if (compareDates(getValues("startDate"), value) < 56) {
                                     return "Plan must be at least 8 weeks long.";
                                 }
                                 return true;
@@ -151,7 +150,7 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="name">Plan Name</label>
                     <input 
                         {...register("name", {
-                            required: "Plan name is required.",
+                            required: "Required field.",
                             minLength: {
                                 value: 8,
                                 message: "Plan name must be at least 8 characters."

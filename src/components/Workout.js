@@ -2,7 +2,7 @@ import React from "react";
 
 function Workout({ planDate, title, desc, terms }) {
 
-    const dateFormat = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateFormat = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
     
     return(
         <div className="workout">

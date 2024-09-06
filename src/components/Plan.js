@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { compareDates, planWeeks, currentWeek } from "../utils.js";
 import Workout from "./Workout";
 import Stats from "./Stats";
-import { compareDates, planWeeks, currentWeek } from "../utils.js";
 
 function Plan({ planInfo }) {
     const [planDate, setPlanDate] = useState(new Date()); // date selected
@@ -9,10 +9,10 @@ function Plan({ planInfo }) {
     const [onPlan, setOnPlan] = useState(false); // whether planDate falls within planInfo.startDate and planInfo.goalDate
     const [offPlanMsg, setOffPlanMsg] = useState(""); // workout message displayed when planDate falls outside of planInfo.startDate and planInfo.goalDate
 
-    const dateFormat = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const dateFormat = { year: "numeric", month: "numeric", day: "numeric" };
 
     useEffect(() => {
-        if(!planInfo.startDate) {
+        if (!planInfo.startDate) {
             return;
         }
         setOnPlan(true);
@@ -29,7 +29,7 @@ function Plan({ planInfo }) {
     }, [planInfo]);
     
     useEffect(() => {
-        if(!planInfo.startDate) {
+        if (!planInfo.startDate) {
             return;
         }
         const diff = compareDates(planInfo.startDate, planDate); // days from first day of plan until planDate
