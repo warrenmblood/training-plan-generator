@@ -9,7 +9,7 @@ function Plan({ planInfo }) {
     const [onPlan, setOnPlan] = useState(false); // whether planDate falls within planInfo.startDate and planInfo.goalDate
     const [offPlanMsg, setOffPlanMsg] = useState(""); // workout message displayed when planDate falls outside of planInfo.startDate and planInfo.goalDate
 
-    const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
+    const dateFormat = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
     useEffect(() => {
         if(!planInfo.startDate) {
@@ -51,13 +51,13 @@ function Plan({ planInfo }) {
         setPlanDate(new Date(planDate.getFullYear(), planDate.getMonth(), planDate.getDate() - 1));
     };
 
-    const workoutExists = onPlan && planInfo.workouts;
+    let workoutExists = onPlan && planInfo.workouts;
+    let goalDateText = planInfo.goalDate ? planInfo.goalDate.toLocaleDateString("en-US", dateFormat) : "";
 
     return(
         <div className="plan">
             <div className="workout-header">
-                <p>{planInfo.name ?? "Select a Plan to View Workouts"}</p>
-                <p>{planInfo.goalDate ? `Goal Date: ${planInfo.goalDate.toLocaleDateString("en-US", dateFormat)}` : ""}</p>
+                <p>{planInfo.name ? `${planInfo.name} (Goal Date: ${goalDateText})` : "Select a Plan to View Workouts"}</p>
             </div>
             <div className="workout-body">
                 <button type="button" onClick={prevDay}>&#128896;</button>

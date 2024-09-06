@@ -73,22 +73,31 @@ body {
     flex-flow: column nowrap;
     list-style-type: none;
     padding-left: 0;
-    margin-top: 20px;
+    margin-top: 10px;
     opacity: 0;
 }
 
 .saved-plan {
     width: calc(220px - 0.8rem);
-    white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-    text-overflow: ellipsis;
-    line-height: 30px;
     border-top: 1px solid lightgray;
-    padding: 0.4rem;
 }
 
-.saved-plan:hover {
+.saved-plan button {
+    width: 100%;
+    display: inline-block;
+    line-height: 30px;
+    background-color: transparent;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.4rem;
+    border: none;
+}
+
+.saved-plan button:hover {
     background-color: #C0C0C0;
     cursor: pointer;
 }
@@ -146,6 +155,7 @@ input#runsPerWeek {
     width: 100%;
     text-align: center;
     user-select: none;
+    margin-bottom: 40px;
 }
 
 .workout-header > p {

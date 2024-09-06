@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { generatePlan, compareDates } from "../utils.js";
 
-function PlanInputs({ setPlan, offDay, jargon }) {
+function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
     const [runsPerWeek, setRunsPerWeek] = useState(4);
 
     const updateSlider = (e) => setRunsPerWeek(e.target.value);
@@ -17,6 +17,9 @@ function PlanInputs({ setPlan, offDay, jargon }) {
     const onSubmit = (data) => {
         const plan = generatePlan(data, offDay, jargon);
         setPlan(plan);
+        const saved = [ ...savedPlans ];
+        saved.push(plan);
+        setSavedPlans(saved);
     };
 
     return (

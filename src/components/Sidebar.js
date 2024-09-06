@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function Sidebar({ savedPlans }) {
+function Sidebar({ savedPlans, setPlan }) {
     const [active, setActive] = useState(false);
+    const [selected, setSelected] = useState({});
 
     const activateSidebar = () => setActive(!active);
-    
+
+    useEffect(() => {
+        setPlan(selected);
+    }, [selected]);
+
     return(
         <div className={`sidebar${active ? " active" : ""}`}>
             <div className="header">
@@ -14,7 +19,7 @@ function Sidebar({ savedPlans }) {
             <ol className="plan-list">
                 {savedPlans.map(plan => (
                     <li className="saved-plan">
-                        {plan.name}
+                        <button type="submit" onClick={() => setSelected(plan)}>{plan.name}</button>
                     </li>
                 ))}
             </ol>
