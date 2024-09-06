@@ -14,12 +14,13 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
         formState: { errors, isSubmitting },
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = (data, e) => {
         const plan = generatePlan(data, offDay, jargon);
         setPlan(plan);
         const saved = [ ...savedPlans ];
         saved.push(plan);
         setSavedPlans(saved);
+        e.target.reset();
     };
 
     return (
@@ -29,44 +30,66 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="unit">Distance Unit</label>
                     <select
                         {...register("unit", {
-                            required: "Unit is required",
+                            required: "Unit is required.",
                         })}
                         id="unit">
-                        <option value="km">km</option>
                         <option value="mi">mi</option>
+                        <option value="km">km</option>
                     </select>
                     {errors.unit && (
-                        <div className="error">errors.unit.message</div>
+                        <div className="error">{errors.unit.message}</div>
                     )}
                 </div>
                 <div className="entry">
                     <label htmlFor="startDistance">Current Distance</label>
                     <input
                         {...register("startDistance", {
-                            required: "Current furthest distance is required",
+                            required: "Current distance is required.",
                             valueAsNumber: true,
+                            min: {
+                                value: 0,
+                                message: "Enter a valid distance."
+                            },
+                            max: {
+                                value: 100,
+                                message: "Distance cannot exceed 100."
+                            },
                         })}
                         id="startDistance"
                         type="number"
                         step="any"
                     />
                     {errors.startDistance && (
-                        <div className="error">errors.startDistance.message</div>
+                        <div className="error">{errors.startDistance.message}</div>
                     )}
                 </div>
                 <div className="entry">
                     <label htmlFor="goalDistance">Goal Distance</label>
                     <input 
                         {...register("goalDistance", {
-                            required: "Goal distance is required",
+                            required: "Goal distance is required.",
                             valueAsNumber: true,
+                            min: {
+                                value: 0,
+                                message: "Enter a valid distance."
+                            },
+                            max: {
+                                value: 100,
+                                message: "Distance cannot exceed 100."
+                            },
+                            validate: (value) => {
+                                if(!(value > getValues("startDistance"))) {
+                                    return "Goal distance must be greater than start distance.";
+                                }
+                                return true;
+                            },
                         })}
                         id="goalDistance"
                         type="number"
                         step="any"
                     />
                      {errors.goalDistance && (
-                        <div className="error">errors.goalDistance.message</div>
+                        <div className="error">{errors.goalDistance.message}</div>
                     )}
                 </div>
                 <div className="entry">
@@ -88,22 +111,31 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                     <label htmlFor="startDate">Start Date</label>
                     <input
                         {...register("startDate", {
-                            required: "Start date is required",
+                            required: "Start date is required.",
                             valueAsDate: true,
+                            validate: (value) => {
+                                if(compareDates(new Date(), value) < -1) {
+                                    return "Start date cannot be in the past.";
+                                }
+                                return true;
+                            },
                         })}
                         id="startDate" 
                         type="date" 
                     />
+                    {errors.startDate && (
+                        <div className="error">{errors.startDate.message}</div>
+                    )}
                 </div>
                 <div className="entry">
                     <label htmlFor="goalDate">Goal Date</label>
                     <input
                         {...register("goalDate", {
-                            required: "Goal date is required",
+                            required: "Goal date is required.",
                             valueAsDate: true,
                             validate: (value) => {
                                 if(compareDates(getValues("startDate"), value) < 56) {
-                                    return "Plan must be at least 8 weeks long";
+                                    return "Plan must be at least 8 weeks long.";
                                 }
                                 return true;
                             },
@@ -112,12 +144,29 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
                         type="date" 
                     />
                     {errors.goalDate && (
-                        <div className="error">errors.goalDate.message</div>
+                        <div className="error">{errors.goalDate.message}</div>
                     )}
                 </div>
                 <div className="entry">
                     <label htmlFor="name">Plan Name</label>
-                    <input {...register("name")} id="name" type="text" />
+                    <input 
+                        {...register("name", {
+                            required: "Plan name is required.",
+                            minLength: {
+                                value: 8,
+                                message: "Plan name must be at least 8 characters."
+                            },
+                            maxLength: {
+                                value: 30,
+                                message: "Plan name cannot exceed 30 characters."
+                            },
+                        })}
+                        id="name"
+                        type="text"
+                    />
+                    {errors.name && (
+                        <div className="error">{errors.name.message}</div>
+                    )}
                 </div>
                 <div className="submit entry">
                     <button disabled={isSubmitting} type="submit" value="Generate Plan">

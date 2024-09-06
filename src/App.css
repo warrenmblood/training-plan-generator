@@ -206,7 +206,6 @@ input#runsPerWeek {
 .workout > .title {
     font-size: 22px;
     font-weight: bold;
-    text-transform: capitalize;
 }
 
 .workout > div {

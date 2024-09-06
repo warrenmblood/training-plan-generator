@@ -60,7 +60,7 @@ export function generateWorkout(type, distance, unit, jargon) {
             break;
         case 'goal':
             title += 'Goal Run';
-            desc = `Today's the day! Run ${Math.round(distance)} ${unit} and base your pace off of your previous long runs. Good luck!`;
+            desc = `Today's the day! Run ${Math.round(distance * 10) / 10} ${unit} and base your pace off of your previous long runs. Good luck!`;
             terms = [];
     }
     workout.title = title;
