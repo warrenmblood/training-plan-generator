@@ -16,9 +16,25 @@ function PlanInputs({ setPlan, setSavedPlans, savedPlans, offDay, jargon }) {
 
     const onSubmit = (data, e) => {
         const plan = generatePlan(data, offDay, jargon);
+
+        const request = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(plan)
+        };
+
+        fetch("/api/plans/put", request)
+        .then(res => res.json())
+        .then(data => {
+            data.forEach((p) => {
+                p.goalDate = new Date(p.goalDate);
+                p.startDate = new Date(p.startDate);
+            });
+            setSavedPlans(data);
+        });
+
         setPlan(plan);
-        setSavedPlans([...savedPlans, plan]);
-        
+    
         e.target.reset();
     };
 
