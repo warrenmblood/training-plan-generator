@@ -1,14 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 function Sidebar({ savedPlans, setPlan }) {
     const [active, setActive] = useState(false);
-    const [selected, setSelected] = useState({});
 
     const activateSidebar = () => setActive(!active);
 
-    useEffect(() => {
-        setPlan(selected);
-    }, [selected]);
+    const selectPlan = (plan) => {
+        const request = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(plan)
+        };
+
+        fetch("/api/currentPlan/put", request)
+        .then(res => res.json())
+        .then(data => {
+            if(data.goalDate) {
+                data.goalDate = new Date(data.goalDate);
+                data.startDate = new Date(data.startDate);
+            }
+            setPlan(data);
+        });
+    };
 
     return(
         <div className={`sidebar${active ? " active" : ""}`}>
@@ -19,7 +32,7 @@ function Sidebar({ savedPlans, setPlan }) {
             <ol className="plan-list">
                 {savedPlans.map(plan => (
                     <li className="saved-plan">
-                        <button type="submit" onClick={() => setSelected(plan)}>{plan.name}</button>
+                        <button type="submit" onClick={() => selectPlan(plan)}>{plan.name}</button>
                     </li>
                 ))}
             </ol>

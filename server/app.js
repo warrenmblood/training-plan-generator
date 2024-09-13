@@ -27,46 +27,32 @@ const info = {
 };
 
 const plans = [];
-// let currentPlan = {};
-// let currentDate = today;
+let currentPlan = {};
 
 app.get("/api/info", (req, res) => {
-    console.log("GET successful");
+    console.log("GET info successful");
     res.send(info);
 });
 
 app.get("/api/plans", (req, res) => {
-    console.log("GET successful");
+    console.log("GET plans successful");
     res.send(plans);
 });
 
 app.put("/api/plans/put", (req, res) => {
-    console.log("PUT successful");
+    console.log("PUT plans successful");
     let newPlan = req.body;
     plans.push(newPlan);
     res.send(plans);
 });
 
-/*
 app.get("/api/currentPlan", (req, res) => {
-    console.log("GET successful");
+    console.log("GET currentPlan successful");
     res.send(currentPlan);
 });
 
 app.put("/api/currentPlan/put", (req, res) => {
-    console.log("PUT successful");
+    console.log("PUT currentPlan successful");
     currentPlan = req.body;
     res.send(currentPlan);
 });
-
-app.get("/api/currentDate", (req, res) => {
-    console.log("GET successful");
-    res.send(currentDate);
-});
-
-app.put("/api/currentDate/put", (req, res) => {
-    console.log("PUT successful");
-    currentDate = req.body;
-    res.send(currentDate);
-});
-*/

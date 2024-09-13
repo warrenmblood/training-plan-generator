@@ -29,6 +29,16 @@ const App = () => {
       });
       setSavedPlans(data);
     });
+
+    fetch("/api/currentPlan")
+    .then(res => res.json())
+    .then(data => {
+      if(data.goalDate) {
+        data.goalDate = new Date(data.goalDate);
+        data.startDate = new Date(data.startDate);
+      }
+      setPlan(data);
+    });
   }, []);
 
   return (
@@ -41,7 +51,6 @@ const App = () => {
         <PlanInputs
           setPlan={setPlan}
           setSavedPlans={setSavedPlans}
-          savedPlans={savedPlans}
           offDay={info.offDay}
           jargon={info.jargon}
         />
