@@ -136,14 +136,14 @@ export function generatePlan(planInputs, offDay, jargon) {
                 break;
             case 5: // medium easy run (priority = 3)
                 if (runsPerWeek >= 3) {
-                    plan.workouts.unshift(generateWorkout('easy', (Math.round(0.4*longest) * 10) / 10, unit, jargon));
+                    plan.workouts.unshift(generateWorkout('easy', Math.round(0.4 * longest * 10) / 10, unit, jargon));
                 } else {
                     plan.workouts.unshift(offDay);
                 }
                 break;
             case 6: // short easy run (priority = 7)
                 if (runsPerWeek >= 7) {
-                    plan.workouts.unshift(generateWorkout('easy', (Math.round(0.3*longest) * 10) / 10, unit, jargon));
+                    plan.workouts.unshift(generateWorkout('easy', Math.round(0.3 * longest * 10) / 10, unit, jargon));
                 } else {
                     plan.workouts.unshift(offDay);
                 }
