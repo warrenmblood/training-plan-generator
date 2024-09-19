@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
+
+const { db } = require("./firebase.js");
 
 app.listen(PORT, () => console.log(`server started on port ${PORT}`));
 
@@ -26,33 +28,38 @@ const info = {
     },
 };
 
-const plans = [];
 let currentPlan = {};
 
 app.get("/api/info", (req, res) => {
-    console.log("GET info successful");
     res.send(info);
 });
 
-app.get("/api/plans", (req, res) => {
-    console.log("GET plans successful");
-    res.send(plans);
+app.get("/api/plans", async (req, res) => {
+    try {
+        const result = await db.collection('plans').get();
+        const plans = [];
+        result.forEach(doc => plans.push(doc.data()));
+        res.status(200).send(plans);
+    } catch {
+        res.sendStatus(400);
+    }
 });
 
-app.put("/api/plans/put", (req, res) => {
-    console.log("PUT plans successful");
-    let newPlan = req.body;
-    plans.push(newPlan);
-    res.send(plans);
+app.put("/api/plans/put", async (req, res) => {
+    try {
+        const newPlan = req.body;
+        const result = await db.collection('plans').add(newPlan);
+        res.status(200).send(newPlan);
+    } catch {
+        res.sendStatus(400);
+    }
 });
 
 app.get("/api/currentPlan", (req, res) => {
-    console.log("GET currentPlan successful");
     res.send(currentPlan);
 });
 
 app.put("/api/currentPlan/put", (req, res) => {
-    console.log("PUT currentPlan successful");
     currentPlan = req.body;
     res.send(currentPlan);
 });

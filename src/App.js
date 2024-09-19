@@ -50,6 +50,7 @@ const App = () => {
       <div className="main-content">
         <PlanInputs
           setPlan={setPlan}
+          savedPlans={savedPlans}
           setSavedPlans={setSavedPlans}
           offDay={info.offDay}
           jargon={info.jargon}

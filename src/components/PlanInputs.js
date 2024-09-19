@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { generatePlan, compareDates } from "../utils.js";
 
-function PlanInputs({ setPlan, setSavedPlans, offDay, jargon }) {
+function PlanInputs({ setPlan, savedPlans, setSavedPlans, offDay, jargon }) {
     const [runsPerWeek, setRunsPerWeek] = useState(4);
 
     const updateSlider = (e) => setRunsPerWeek(e.target.value);
@@ -26,20 +26,16 @@ function PlanInputs({ setPlan, setSavedPlans, offDay, jargon }) {
         fetch("/api/plans/put", request)
         .then(res => res.json())
         .then(data => {
-            data.forEach((p) => {
-                p.goalDate = new Date(p.goalDate);
-                p.startDate = new Date(p.startDate);
-            });
-            setSavedPlans(data);
+            data.goalDate = new Date(data.goalDate);
+            data.startDate = new Date(data.startDate);
+            setSavedPlans([...savedPlans, data]);
         });
 
         fetch("/api/currentPlan/put", request)
         .then(res => res.json())
         .then(data => {
-            if(data.goalDate) {
-                data.goalDate = new Date(data.goalDate);
-                data.startDate = new Date(data.startDate);
-            }
+            data.goalDate = new Date(data.goalDate);
+            data.startDate = new Date(data.startDate);
             setPlan(data);
         });
     

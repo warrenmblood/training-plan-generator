@@ -15,10 +15,8 @@ function Sidebar({ savedPlans, setPlan }) {
         fetch("/api/currentPlan/put", request)
         .then(res => res.json())
         .then(data => {
-            if(data.goalDate) {
-                data.goalDate = new Date(data.goalDate);
-                data.startDate = new Date(data.startDate);
-            }
+            data.goalDate = new Date(data.goalDate);
+            data.startDate = new Date(data.startDate);
             setPlan(data);
         });
     };
