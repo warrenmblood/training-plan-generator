@@ -1,38 +1,270 @@
-.App {
+body {
+  background-color: transparent;
+  font-size: 18px;
+  overflow: hidden;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 50px;
+  background-color: #12171e;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  transition: all 0.5s ease;
+}
+
+.sidebar.active {
+  width: 220px;
+}
+
+.main-content {
+  position: relative;
+  left: 50px;
+  width: calc(100% - 50px);
+  transition: all 0.5s ease;
+}
+
+.sidebar.active ~ .main-content {
+  left: 220px;
+  width: calc(100% - 220px);
+}
+
+.sidebar .header {
+  font-size: 24px;
+  user-select: none;
+}
+
+.sidebar .header button {
+  position: absolute;
+  top: 0.4rem;
+  left: 50%;
+  line-height: 50px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  font-size: 24px;
+  border: none;
+}
+
+.sidebar.active .header button {
+  left: 90%;
+}
+
+.sidebar .header .title {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.sidebar.active .header .title, .sidebar.active .plan-list {
+  transition: all 0.5s ease;
+  opacity: 1;
+}
+
+.plan-list {
+  display: flex;
+  flex-flow: column nowrap;
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px;
+  opacity: 0;
+}
+
+.saved-plan {
+  width: calc(220px - 0.8rem);
+  border-top: 1px solid lightgray;
+}
+
+.saved-plan button {
+  width: 100%;
+  display: inline-block;
+  line-height: 30px;
+  background-color: transparent;
+  color: white;
+  font-size: 18px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0.4rem;
+  border: none;
+}
+
+.saved-plan button:hover {
+  background-color: #C0C0C0;
+  cursor: pointer;
+}
+
+.plan-inputs {
+  margin: auto;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 40px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.entry {
+  flex: 1 1 21%;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.entry label {
+  user-select: none;
+}
+
+.entry.submit {
+  justify-content: flex-end;
+}
+
+.entry > button {
+  font-size: 20px;
+  background-color: lightgreen;
+  cursor: pointer;
+}
+
+input#startDistance, input#goalDistance {
+  width: 50px;
+}
+
+input#name {
+  width: 60%;
+}
+
+input#runsPerWeek {
+  width: 120px;
+}
+
+.plan {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.workout-header {
+  width: 100%;
+  text-align: center;
+  user-select: none;
+  margin-bottom: 40px;
+}
+
+.workout-header > p {
+  margin: 5px;
+}
+
+.workout-body {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.workout-body > button {
+  width: 100px;
+  height: 100px;
+  border: transparent;
+  background-color: transparent;
+  font-size: 60px;
+  color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.workout {
+  border: 1px solid black;
+  border-radius: 25px;
+  width: 600px;
+  height: 300px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+  padding: 10px;
+}
+
+.workout > .title, .workout > .date {
+  text-align: center;
+  user-select: none;
+}
+
+.workout > .date {
+  color: #71797E;
+}
+
+.workout > .title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.workout > div {
+  padding: 10px;
+}
+
+.workout > .description, .definitions {
+  font-size: 15px;
+}
+
+.definition > span {
+  font-weight: bold;
+}
+
+.stats {
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.error {
+  color: red;
+  font-size: 12px;
+  position: absolute;
+  margin-top: 28px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.login-page {
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.login {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 200px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login input {
+  width: 200px;
+}
+
+.login-btn {
+  margin: 5px 0px;
+  cursor: pointer;
+}
+
+.logout {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.logout button {
+  cursor: pointer;
+  margin-right: 40px;
 }
