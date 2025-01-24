@@ -32,7 +32,7 @@ body {
   width: calc(100% - 220px);
 }
 
-.sidebar .header {
+.sidebar {
   font-size: 24px;
   user-select: none;
 }
